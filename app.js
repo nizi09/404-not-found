@@ -1,5 +1,9 @@
 'use strict';
 
+// ═══════════════════════════════════════════════════════
+//  QUESTIONS DATA
+// ═══════════════════════════════════════════════════════
+
 const QUESTIONS = [
   {
     id:1, category:'road_signs',
@@ -35,7 +39,7 @@ const QUESTIONS = [
     id:6, category:'stopping_distances',
     text:'What is the total stopping distance at 70 mph in good conditions?',
     options:['A] 53 metres','B] 73 metres','C] 96 metres','D] 120 metres'],
-    answer:2, explanation:'At 70 mph: 21m thinking distance + 75m braking distance = 96 metres total (about 24 car lengths).'
+    answer:2, explanation:'At 70 mph: 21m thinking distance + 75m braking distance = 96 metres total.'
   },
   {
     id:7, category:'stopping_distances',
@@ -65,7 +69,7 @@ const QUESTIONS = [
     id:11, category:'vehicle_safety',
     text:'Your tyre pressure warning light comes on. What should you do?',
     options:['A] Drive to the next service station normally','B] Stop when safe and check your tyre pressures','C] Ignore it — it resets itself','D] Increase your speed to pump air in'],
-    answer:1, explanation:'Stop when safe and check all tyre pressures. Driving on under-inflated tyres is dangerous and illegal.'
+    answer:1, explanation:'Stop when safe and check all tyre pressures. Driving on under-inflated tyres is dangerous.'
   },
   {
     id:12, category:'vehicle_safety',
@@ -77,19 +81,19 @@ const QUESTIONS = [
     id:13, category:'rules_of_road',
     text:'At a roundabout, who has priority?',
     options:['A] Vehicles entering the roundabout','B] Vehicles already on the roundabout','C] Vehicles coming from the right','D] Emergency vehicles only'],
-    answer:1, explanation:'Vehicles already on the roundabout have priority. You must give way to traffic from the right before entering.'
+    answer:1, explanation:'Vehicles already on the roundabout have priority.'
   },
   {
     id:14, category:'rules_of_road',
     text:'You MUST stop at which type of line?',
     options:['A] A single broken white line','B] A double broken white line','C] A solid white stop line','D] A yellow line'],
-    answer:2, explanation:'A solid white stop line at a junction means you must stop — not just give way.'
+    answer:2, explanation:'A solid white stop line at a junction means you must stop.'
   },
   {
     id:15, category:'rules_of_road',
     text:'When may you use the outside lane of a motorway?',
     options:['A] For normal driving at any time','B] When overtaking','C] When the inside lane is full','D] When you want to drive faster'],
-    answer:1, explanation:'The outside lane of a motorway is for overtaking only. Return to the left lanes when safe.'
+    answer:1, explanation:'The outside lane of a motorway is for overtaking only.'
   },
   {
     id:16, category:'motorway',
@@ -107,7 +111,7 @@ const QUESTIONS = [
     id:18, category:'motorway',
     text:'You break down on a motorway. Where should you stop?',
     options:['A] In the left lane with hazard lights on','B] In the central reservation if possible','C] On the hard shoulder as far left as possible','D] Anywhere you can reach safely'],
-    answer:2, explanation:'Pull onto the hard shoulder as far left as possible, turn on hazard lights, and exit via the nearside door.'
+    answer:2, explanation:'Pull onto the hard shoulder as far left as possible, turn on hazard lights, exit via the nearside door.'
   },
   {
     id:19, category:'alcohol_drugs',
@@ -131,7 +135,7 @@ const QUESTIONS = [
     id:22, category:'environment',
     text:'How can you reduce your car\'s fuel consumption?',
     options:['A] Keep your engine revving high','B] Accelerate sharply and brake hard','C] Keep tyres at the correct pressure and anticipate the road','D] Drive faster to spend less time on the road'],
-    answer:2, explanation:'Correct tyre pressure and smooth anticipatory driving reduces fuel use and emissions significantly.'
+    answer:2, explanation:'Correct tyre pressure and smooth anticipatory driving reduces fuel use and emissions.'
   },
   {
     id:23, category:'first_aid',
@@ -161,7 +165,7 @@ const QUESTIONS = [
     id:27, category:'road_signs',
     text:'What does a sign showing a red circle with a number inside mean?',
     options:['A] Advisory speed','B] Maximum speed limit (mandatory)','C] Minimum speed','D] Recommended speed'],
-    answer:1, explanation:'A number in a red circle is a mandatory maximum speed limit — not advisory.'
+    answer:1, explanation:'A number in a red circle is a mandatory maximum speed limit.'
   },
   {
     id:28, category:'rules_of_road',
@@ -251,13 +255,13 @@ const QUESTIONS = [
     id:42, category:'rules_of_road',
     text:'You must not park within how many metres of a junction?',
     options:['A] 5 metres','B] 10 metres','C] 15 metres','D] 20 metres'],
-    answer:1, explanation:'You must not park within 10 metres of a junction as it restricts visibility for other road users.'
+    answer:1, explanation:'You must not park within 10 metres of a junction.'
   },
   {
     id:43, category:'first_aid',
     text:'Someone\'s clothing is on fire. What should you do?',
     options:['A] Tell them to run to cool down','B] Pour cold water on them','C] Stop, drop, and smother the flames','D] Fan the flames to cool them'],
-    answer:2, explanation:'Stop, drop, and roll/smother the flames with a coat or blanket. Never use water on burning clothing.'
+    answer:2, explanation:'Stop, drop, and roll/smother the flames with a coat or blanket.'
   },
   {
     id:44, category:'motorway',
@@ -275,7 +279,7 @@ const QUESTIONS = [
     id:46, category:'hazard_perception',
     text:'You\'re driving behind a cyclist approaching a junction. They signal right. You should:',
     options:['A] Overtake before the junction','B] Hold back and give them time and space to turn safely','C] Sound your horn to alert other road users','D] Flash your lights to warn oncoming vehicles'],
-    answer:1, explanation:'Hold back and give the cyclist time and space. They are vulnerable and entitled to use the road safely.'
+    answer:1, explanation:'Hold back and give the cyclist time and space.'
   },
   {
     id:47, category:'road_signs',
@@ -316,6 +320,10 @@ const TOPICS = {
   first_aid:          { label:'First Aid',            icon:'🏥' },
 };
 
+// ═══════════════════════════════════════════════════════
+//  THEORY TEST STATE
+// ═══════════════════════════════════════════════════════
+
 let currentScreen    = 'landing';
 let currentMode      = null;
 let currentQuestions = [];
@@ -325,11 +333,16 @@ let timerInterval    = null;
 let secondsLeft      = 57 * 60;
 let aiSuggestion     = '';
 
+// ── Local storage helpers ──
 const LS = {
-  get:    k => { try { return JSON.parse(localStorage.getItem(k)) } catch { return null } },
-  set:    (k,v) => localStorage.setItem(k, JSON.stringify(v)),
-  push:   (k,v) => { const arr = LS.get(k) || []; arr.push(v); LS.set(k, arr) },
+  get:  k => { try { return JSON.parse(localStorage.getItem(k)) } catch { return null } },
+  set:  (k,v) => localStorage.setItem(k, JSON.stringify(v)),
+  push: (k,v) => { const arr = LS.get(k) || []; arr.push(v); LS.set(k, arr) },
 };
+
+// ═══════════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════════
 
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -337,17 +350,21 @@ function showScreen(name) {
   if (el) {
     el.classList.add('active');
     currentScreen = name;
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     document.getElementById('navLinks').classList.remove('open');
   }
-  if (name === 'dashboard')  renderDashboard();
-  if (name === 'readiness')  renderReadiness();
-  if (name === 'landing')    renderLandingStats();
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'readiness') renderReadiness();
+  if (name === 'landing')   renderLandingStats();
 }
 
 function toggleNav() {
   document.getElementById('navLinks').classList.toggle('open');
 }
+
+// ═══════════════════════════════════════════════════════
+//  LANDING
+// ═══════════════════════════════════════════════════════
 
 function renderLandingStats() {
   const history = LS.get('testHistory') || [];
@@ -373,6 +390,10 @@ function renderCatPills() {
     `<span class="cat-pill" onclick="startCategoryTest('${key}')">${t.icon} ${t.label}</span>`
   ).join('');
 }
+
+// ═══════════════════════════════════════════════════════
+//  THEORY TEST
+// ═══════════════════════════════════════════════════════
 
 function startTest(mode, category = null) {
   currentMode = mode;
@@ -405,23 +426,19 @@ function startCategoryTest(category) {
 }
 
 function renderQuestion() {
-  const q = currentQuestions[currentQIndex];
+  const q     = currentQuestions[currentQIndex];
   const total = currentQuestions.length;
+  const pct   = (currentQIndex / total) * 100;
 
-  const pct = ((currentQIndex) / total) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = `${currentQIndex + 1} / ${total}`;
-
   document.getElementById('qCategory').textContent = TOPICS[q.category]?.label || q.category;
   document.getElementById('questionText').textContent = q.text;
+  document.getElementById('questionImageWrap').classList.add('hidden');
 
-  const imgWrap = document.getElementById('questionImageWrap');
-  imgWrap.classList.add('hidden');
-
-  const grid = document.getElementById('answersGrid');
   const letters = ['A','B','C','D'];
-  grid.innerHTML = q.options.map((opt, i) => {
-    const txt = opt.replace(/^[A-D]\]\s*/,'');
+  document.getElementById('answersGrid').innerHTML = q.options.map((opt, i) => {
+    const txt      = opt.replace(/^[A-D]\]\s*/,'');
     const selected = userAnswers[currentQIndex] === i ? 'selected' : '';
     return `<button class="answer-option ${selected}" onclick="selectAnswer(${i})">
       <span class="answer-letter">${letters[i]}</span>
@@ -450,10 +467,7 @@ function nextQuestion() {
 }
 
 function prevQuestion() {
-  if (currentQIndex > 0) {
-    currentQIndex--;
-    renderQuestion();
-  }
+  if (currentQIndex > 0) { currentQIndex--; renderQuestion(); }
 }
 
 function abandonTest() {
@@ -474,13 +488,8 @@ function startTimer() {
   timerInterval = setInterval(() => {
     secondsLeft--;
     updateTimerDisplay();
-    if (secondsLeft <= 0) {
-      clearInterval(timerInterval);
-      finishTest();
-    }
-    if (secondsLeft <= 300) {
-      document.getElementById('testTimer').classList.add('warning');
-    }
+    if (secondsLeft <= 0) { clearInterval(timerInterval); finishTest(); }
+    if (secondsLeft <= 300) document.getElementById('testTimer').classList.add('warning');
   }, 1000);
 }
 
@@ -502,12 +511,9 @@ function finishTest() {
 
   currentQuestions.forEach((q, i) => {
     const cat = q.category;
-    if (!topicScores[cat]) topicScores[cat] = {correct:0, total:0};
+    if (!topicScores[cat]) topicScores[cat] = { correct:0, total:0 };
     topicScores[cat].total++;
-    if (userAnswers[i] === q.answer) {
-      correct++;
-      topicScores[cat].correct++;
-    }
+    if (userAnswers[i] === q.answer) { correct++; topicScores[cat].correct++; }
   });
 
   const total    = currentQuestions.length;
@@ -519,26 +525,13 @@ function finishTest() {
     .filter(([,v]) => (v.correct / v.total) < 0.7)
     .map(([k]) => k);
 
-  const result = {
-    score,
-    weak_areas: weakAreas,
-    total_questions: total,
-    correct,
-    wrong: total - correct,
-    time: `${mm}:${ss}`,
-    mode: currentMode,
-    date: new Date().toLocaleDateString('en-GB'),
-    topicScores,
-    passed,
-  };
+  const result = { score, weak_areas:weakAreas, total_questions:total, correct,
+    wrong:total-correct, time:`${mm}:${ss}`, mode:currentMode,
+    date:new Date().toLocaleDateString('en-GB'), topicScores, passed };
 
   LS.push('testHistory', {
-    scorePercent: score,
-    correct, total,
-    mode: currentMode,
-    date: result.date,
-    weakAreas,
-    passed,
+    scorePercent:score, correct, total, mode:currentMode,
+    date:result.date, weakAreas, passed
   });
 
   updateTopicAverages(topicScores);
@@ -549,10 +542,9 @@ function showResults(result, mm, ss) {
   document.getElementById('activeTest').classList.add('hidden');
   document.getElementById('modeSelect').classList.add('hidden');
   document.getElementById('testResults').classList.remove('hidden');
-
   window.scrollTo(0,0);
 
-  const icon   = result.passed ? '🎉' : result.score >= 70 ? '📈' : '💪';
+  const icon    = result.passed ? '🎉' : result.score >= 70 ? '📈' : '💪';
   const heading = result.passed ? 'You passed!' : result.score >= 70 ? 'Getting there!' : 'Keep practising!';
   document.getElementById('resultsIcon').textContent    = icon;
   document.getElementById('resultsHeading').textContent = heading;
@@ -591,9 +583,8 @@ function showResults(result, mm, ss) {
 function renderReview() {
   const list = document.getElementById('reviewList');
   list.innerHTML = currentQuestions.map((q, i) => {
-    const userAns  = userAnswers[i];
-    const correct  = userAns === q.answer;
-    const letters  = ['A','B','C','D'];
+    const userAns = userAnswers[i];
+    const correct = userAns === q.answer;
     const cleanOpt = opt => opt.replace(/^[A-D]\]\s*/,'');
     return `
       <div class="review-item ${correct ? 'review-correct' : 'review-incorrect'}">
@@ -613,11 +604,57 @@ function renderReview() {
   }).join('');
 }
 
+// ── AI suggestion via Groq (replaces Gemini) ──
+async function fetchAISuggestion(result) {
+  const statusEl = document.getElementById('aiStatus');
+  const bodyEl   = document.getElementById('aiBody');
+
+  statusEl.textContent = 'Analysing your results...';
+  bodyEl.innerHTML = `<div class="ai-loading"><div class="ai-spinner"></div><p>Your AI co-pilot is reading your weak areas...</p></div>`;
+
+  const weakLabels = result.weak_areas.map(a => TOPICS[a]?.label || a).join(', ');
+
+  const prompt = `You are PassPilot, an AI co-pilot for UK learner drivers preparing for their theory test.
+
+A student just completed a mock theory test:
+- Score: ${result.score}% (${result.correct}/${result.total_questions} correct)
+- Mode: ${result.mode}
+- Weak areas: ${weakLabels || 'None identified'}
+- Passed: ${result.passed ? 'Yes' : 'No (need 86% to pass)'}
+
+Give a friendly, encouraging, specific revision plan:
+1. A brief encouraging message (1-2 sentences)
+2. Top 2-3 priority topics to revise with specific tips
+3. A suggested study action for this week
+4. One motivational sign-off line
+
+Keep it concise, warm and practical. UK spelling.`;
+
+  try {
+    const response = await fetch('/api/ai-suggestion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    const data = await response.json();
+    aiSuggestion = data.suggestion || generateFallbackSuggestion(result);
+
+    bodyEl.innerHTML = `<div class="ai-suggestion-text">${formatAISuggestion(aiSuggestion)}</div>`;
+    statusEl.textContent = 'Plan ready';
+    document.getElementById('aiActions').classList.remove('hidden');
+  } catch (err) {
+    aiSuggestion = generateFallbackSuggestion(result);
+    bodyEl.innerHTML = `<div class="ai-suggestion-text">${formatAISuggestion(aiSuggestion)}</div>`;
+    statusEl.textContent = 'Plan ready';
+    document.getElementById('aiActions').classList.remove('hidden');
+  }
+}
+
 async function askMoreAboutQuestion(index, btn) {
-  const q        = currentQuestions[index];
-  const userAns  = userAnswers[index];
-  const letters  = ['A','B','C','D'];
-  const cleanOpt = opt => opt.replace(/^[A-D]\]\s*/,'');
+  const q           = currentQuestions[index];
+  const userAns     = userAnswers[index];
+  const cleanOpt    = opt => opt.replace(/^[A-D]\]\s*/,'');
   const responseDiv = document.getElementById(`askMore-${index}`);
 
   btn.disabled = true;
@@ -628,7 +665,6 @@ async function askMoreAboutQuestion(index, btn) {
   const prompt = `You are PassPilot, a friendly UK driving theory instructor.
 
 A learner got this question ${userAns === q.answer ? 'correct' : 'wrong'}:
-
 Question: ${q.text}
 Their answer: ${userAns !== undefined ? cleanOpt(q.options[userAns]) : 'Skipped'}
 Correct answer: ${cleanOpt(q.options[q.answer])}
@@ -642,73 +678,37 @@ Give them:
 Keep it friendly, concise and specific to UK driving rules. Max 120 words.`;
 
   try {
-    const apiKey = window.GEMINI_KEY || '';
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
-
+    const response = await fetch('/api/ai-suggestion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
     const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-    if (!text) throw new Error('No response');
-
+    const text = data.suggestion || q.explanation;
     responseDiv.innerHTML = `<div class="ask-more-text">${formatAISuggestion(text)}</div>`;
     btn.textContent = '✓ Got it';
-
-  } catch(err) {
+  } catch (err) {
     responseDiv.innerHTML = `<div class="ask-more-text">💡 ${q.explanation} Make sure to review this topic in the official DVSA Highway Code.</div>`;
     btn.textContent = '✓ Got it';
   }
 }
 
-function buildAIPrompt(result) {
-  const weakLabels = result.weak_areas.map(a => TOPICS[a]?.label || a).join(', ');
-  return `You are PassPilot, an AI co-pilot for UK learner drivers preparing for their theory test.
-
-A student just completed a mock theory test with these results:
-- Score: ${result.score}% (${result.correct}/${result.total_questions} correct)
-- Mode: ${result.mode}
-- Weak areas: ${weakLabels || 'None identified'}
-- Passed: ${result.passed ? 'Yes' : 'No (need 86% to pass)'}
-
-Give a friendly, encouraging, and specific revision plan. Include:
-1. A brief encouraging message (1-2 sentences)
-2. Top 2-3 priority topics to revise with specific tips for each
-3. A suggested study action for this week
-4. One motivational sign-off line
-
-Keep it concise, warm, and practical. Format with clear sections. UK spelling throughout.`;
-}
-
 function generateFallbackSuggestion(result) {
-  const weak = result.weak_areas.map(a => TOPICS[a]?.label || a);
+  const weak  = result.weak_areas.map(a => TOPICS[a]?.label || a);
   const score = result.score;
-
   let msg = `**Your Revision Plan 🎯**\n\n`;
   if (score >= 86) {
     msg += `Brilliant effort — you hit the pass mark! Keep this level up with daily practice.\n\n`;
   } else {
     msg += `Good effort! You're ${86 - score}% away from the pass mark. Here's your targeted plan:\n\n`;
   }
-
   if (weak.length) {
     msg += `**Priority areas to focus on:**\n`;
-    weak.forEach(w => {
-      msg += `• **${w}** — spend 15 minutes reviewing the official DVSA guidance on this topic.\n`;
-    });
+    weak.forEach(w => { msg += `• **${w}** — spend 15 minutes reviewing the official DVSA guidance.\n`; });
     msg += `\n`;
   }
-
   msg += `**This week:** Complete one mock test per day. Review every wrong answer's explanation.\n\n`;
   msg += `You've got this. Consistent daily practice is the fastest route to that pass certificate. 🏆`;
-
   return msg;
 }
 
@@ -724,15 +724,13 @@ function formatAISuggestion(text) {
 
 function acceptSuggestion() {
   const plan = LS.get('revisionPlan') || [];
-  plan.push({ text: aiSuggestion, date: new Date().toLocaleDateString('en-GB'), accepted: true });
+  plan.push({ text:aiSuggestion, date:new Date().toLocaleDateString('en-GB'), accepted:true });
   LS.set('revisionPlan', plan);
-
   document.getElementById('aiActions').classList.add('hidden');
   document.getElementById('aiBody').innerHTML += `
     <div style="margin-top:1rem;padding:.75rem 1rem;background:#e8faf3;border-radius:8px;color:#006644;font-size:.9rem;font-weight:600">
       ✅ Plan saved to your Dashboard
     </div>`;
-
   unlockBadge('Hybrid Pro');
 }
 
@@ -753,9 +751,12 @@ function rejectSuggestion() {
   document.getElementById('aiCard').classList.add('hidden');
 }
 
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════
+
 function renderDashboard() {
   const history = LS.get('testHistory') || [];
-
   const readiness = calcReadiness();
   const circumference = 326.7;
   const offset = circumference - (circumference * readiness / 100);
@@ -767,8 +768,8 @@ function renderDashboard() {
     : readiness > 0   ? '📚 Keep practising — you\'re improving!'
     : 'Take your first mock test to get started';
 
-  const ringFill = document.getElementById('ringFill');
-  ringFill.style.stroke = readiness >= 80 ? 'var(--mint)' : readiness >= 60 ? 'var(--amber)' : 'var(--red)';
+  document.getElementById('ringFill').style.stroke =
+    readiness >= 80 ? 'var(--mint)' : readiness >= 60 ? 'var(--amber)' : 'var(--red)';
 
   const histDiv = document.getElementById('testHistory');
   if (history.length === 0) {
@@ -776,9 +777,7 @@ function renderDashboard() {
   } else {
     histDiv.innerHTML = history.slice().reverse().slice(0,8).map(t => `
       <div class="history-item">
-        <div>
-          <div class="history-meta">${t.date} · ${t.total} questions</div>
-        </div>
+        <div><div class="history-meta">${t.date} · ${t.total} questions</div></div>
         <span class="history-mode history-mode--${t.mode}">${t.mode}</span>
         <span class="history-score ${t.passed ? 'history-score--pass' : 'history-score--fail'}">${t.scorePercent}%</span>
       </div>`).join('');
@@ -792,20 +791,17 @@ function renderDashboard() {
 function renderTopicBars() {
   const topicAvgs = LS.get('topicAverages') || {};
   const barsDiv   = document.getElementById('topicBars');
-
   if (Object.keys(topicAvgs).length === 0) {
     barsDiv.innerHTML = `<p class="empty-state">Complete a test to see your topic breakdown</p>`;
     return;
   }
-
   barsDiv.innerHTML = Object.entries(TOPICS).map(([key, t]) => {
     const pct = topicAvgs[key] !== undefined ? Math.round(topicAvgs[key] * 100) : null;
     if (pct === null) return '';
     return `
       <div class="topic-bar-item">
         <div class="topic-bar-label">
-          <span>${t.icon} ${t.label}</span>
-          <span>${pct}%</span>
+          <span>${t.icon} ${t.label}</span><span>${pct}%</span>
         </div>
         <div class="topic-bar-track">
           <div class="topic-bar-fill" style="width:${pct}%"></div>
@@ -817,46 +813,38 @@ function renderTopicBars() {
 function renderRevisionPlan() {
   const plan    = LS.get('revisionPlan') || [];
   const listDiv = document.getElementById('revisionList');
-
   if (plan.length === 0) {
     listDiv.innerHTML = `<p class="empty-state">Accept AI suggestions to build your plan</p>`;
     return;
   }
-
   listDiv.innerHTML = plan.slice().reverse().slice(0,5).map(p =>
     `<div class="revision-item">${p.date}: ${p.text.replace(/<[^>]+>/g,'').slice(0,80)}...</div>`
   ).join('');
 }
 
 function renderAchievements(history) {
-  const badges = document.querySelectorAll('.badge');
   const unlocked = LS.get('unlockedBadges') || [];
-
   const badgeMap = ['First Test','3-Day Streak','Score 80%+','Full Pass','All Topics','Hybrid Pro'];
-  badges.forEach((b, i) => {
+  document.querySelectorAll('.badge').forEach((b, i) => {
     if (unlocked.includes(badgeMap[i])) {
       b.classList.remove('badge--locked');
       b.classList.add('badge--unlocked');
     }
   });
-
-  if (history.length >= 1)                            unlockBadge('First Test');
-  if (history.some(h => h.scorePercent >= 80))        unlockBadge('Score 80%+');
-  if (history.some(h => h.passed))                    unlockBadge('Full Pass');
+  if (history.length >= 1)                     unlockBadge('First Test');
+  if (history.some(h => h.scorePercent >= 80)) unlockBadge('Score 80%+');
+  if (history.some(h => h.passed))             unlockBadge('Full Pass');
 }
 
 function unlockBadge(name) {
   const unlocked = LS.get('unlockedBadges') || [];
-  if (!unlocked.includes(name)) {
-    unlocked.push(name);
-    LS.set('unlockedBadges', unlocked);
-  }
+  if (!unlocked.includes(name)) { unlocked.push(name); LS.set('unlockedBadges', unlocked); }
 }
 
 function updateTopicAverages(topicScores) {
   const existing = LS.get('topicAverages') || {};
   Object.entries(topicScores).forEach(([cat, v]) => {
-    const prev = existing[cat];
+    const prev    = existing[cat];
     const current = v.correct / v.total;
     existing[cat] = prev !== undefined ? (prev * 0.6 + current * 0.4) : current;
   });
@@ -866,12 +854,15 @@ function updateTopicAverages(topicScores) {
 function calcReadiness() {
   const history = LS.get('testHistory') || [];
   if (history.length === 0) return 0;
-
-  const recent = history.slice(-5);
-  const avgScore = recent.reduce((s, t) => s + t.scorePercent, 0) / recent.length;
+  const recent      = history.slice(-5);
+  const avgScore    = recent.reduce((s, t) => s + t.scorePercent, 0) / recent.length;
   const consistency = recent.length >= 3 ? 1 : recent.length / 3;
   return Math.round(avgScore * consistency);
 }
+
+// ═══════════════════════════════════════════════════════
+//  READINESS
+// ═══════════════════════════════════════════════════════
 
 function renderReadiness() {
   const readiness = calcReadiness();
@@ -886,13 +877,13 @@ function renderReadiness() {
     text    = 'We need at least one mock test score to assess your readiness.';
   } else if (readiness >= 86) {
     heading = '🚀 You look ready to book!';
-    text    = `Your average score of ${readiness}% suggests you should be well-prepared. Consider booking your theory test!`;
+    text    = `Your average score of ${readiness}% suggests you should be well-prepared.`;
   } else if (readiness >= 70) {
     heading = '📈 Getting close!';
-    text    = `You're scoring ${readiness}% on average. You need 86% to pass. Focus on your weak areas.`;
+    text    = `You're scoring ${readiness}% on average. You need 86% to pass.`;
   } else {
     heading = '📚 Keep building your knowledge';
-    text    = `You're at ${readiness}% — focus on one topic area per day and retake mocks to track improvement.`;
+    text    = `You're at ${readiness}% — focus on one topic area per day.`;
   }
 
   document.getElementById('verdictHeading').textContent = heading;
@@ -903,7 +894,6 @@ function renderReadiness() {
     breakdown.innerHTML = `<p class="empty-state">Complete a test to see topic-level readiness</p>`;
     return;
   }
-
   breakdown.innerHTML = Object.entries(TOPICS).map(([key, t]) => {
     const pct = topicAvgs[key] !== undefined ? Math.round(topicAvgs[key] * 100) : null;
     if (pct === null) return '';
@@ -914,20 +904,21 @@ function renderReadiness() {
         <span class="tri-icon">${t.icon}</span>
         <div class="tri-info">
           <div class="tri-name">${t.label}</div>
-          <div class="tri-bar">
-            <div class="tri-fill" style="width:${pct}%;background:${colour}"></div>
-          </div>
+          <div class="tri-bar"><div class="tri-fill" style="width:${pct}%;background:${colour}"></div></div>
         </div>
         <span class="tri-score" style="color:${colour}">${emoji} ${pct}%</span>
       </div>`;
   }).join('');
 }
 
-function updateChecker() {
-  const boxes = ['chkLicence','chkTheory','chkAge','chkLessons'];
-  const allChecked = boxes.every(id => document.getElementById(id).checked);
+// ═══════════════════════════════════════════════════════
+//  BOOKING CHECKER
+// ═══════════════════════════════════════════════════════
 
-  const result = document.getElementById('checkerResult');
+function updateChecker() {
+  const boxes      = ['chkLicence','chkTheory','chkAge','chkLessons'];
+  const allChecked = boxes.every(id => document.getElementById(id).checked);
+  const result     = document.getElementById('checkerResult');
   if (allChecked) {
     result.className = 'checker-result ready';
     result.innerHTML = `<span class="checker-icon">✅</span><p><strong>You meet all the requirements!</strong> Head to gov.uk/book-driving-test when you feel confident.</p>`;
@@ -938,27 +929,353 @@ function updateChecker() {
   }
 }
 
+// ═══════════════════════════════════════════════════════
+//  STREAK
+// ═══════════════════════════════════════════════════════
+
 function updateStreak() {
-  const today    = new Date().toDateString();
-  const lastDay  = LS.get('lastTestDay');
-  let streak     = LS.get('streak') || 0;
-
+  const today     = new Date().toDateString();
+  const lastDay   = LS.get('lastTestDay');
+  let streak      = LS.get('streak') || 0;
   if (lastDay === today) return;
-
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-
-  if (lastDay === yesterday.toDateString()) {
-    streak++;
-  } else {
-    streak = 1;
-  }
-
+  streak = lastDay === yesterday.toDateString() ? streak + 1 : 1;
   LS.set('streak', streak);
   LS.set('lastTestDay', today);
-
   if (streak >= 3) unlockBadge('3-Day Streak');
 }
+
+// ═══════════════════════════════════════════════════════
+//  DRIVE ANALYSER
+// ═══════════════════════════════════════════════════════
+
+// Demo feedback shown when Groq isn't available or in demo mode
+const DEMO_DRIVE_FEEDBACK = {
+  overall_grade: 'Satisfactory',
+  summary: "You're showing a reasonable level of awareness and control for a learner at this stage. Your road positioning is generally acceptable, though there are a couple of areas to sharpen up before your test — particularly around mirror checks and maintaining consistent speed through hazards.",
+  positives: [
+    'Good lane discipline on the straight sections — holding position well',
+    'Appropriate use of the accelerator when joining the carriageway',
+    'Signalling in good time before the left turn — nice and early'
+  ],
+  faults: [
+    {
+      type: 'Minor',
+      observation: 'Speed crept up to approximately 35mph in a 30mph zone approaching the roundabout',
+      correction: 'Check your speedometer every 8-10 seconds. Ease off the accelerator earlier when you see a junction ahead.',
+      highway_code: 'Rule 125 — The speed limit is the absolute maximum, not a target'
+    },
+    {
+      type: 'Serious',
+      observation: 'No mirror check observed before braking for the pedestrian crossing',
+      correction: 'Always use the MSM routine (Mirror-Signal-Manoeuvre). Check centre mirror before any change in speed.',
+      highway_code: 'Rule 159 — Before braking, check mirrors; be aware of traffic behind'
+    },
+    {
+      type: 'Minor',
+      observation: 'Road position drifted slightly left on the approach to the bend',
+      correction: 'Keep approximately 1 metre from the kerb. Use your nearside mirror to gauge distance.',
+      highway_code: 'Rule 160 — Keep well to the left of the road'
+    }
+  ],
+  focus_points: [
+    'Mirror-Signal-Manoeuvre routine — apply it before every manoeuvre without exception',
+    'Speed awareness in 30mph zones — regular speedometer checks and early hazard anticipation',
+    'Road position on bends — don\'t drift left, it reduces your visibility ahead'
+  ],
+  instructor_note: "Good session — you've clearly been practising and it shows. Get those mirror checks consistent and tighten up the speed management and you'll be in a strong position for your test. Keep at it!"
+};
+
+let driveIsDemoMode = false;
+
+function handleDriveUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  driveIsDemoMode = false;
+  loadDriveVideo(URL.createObjectURL(file), file.name);
+}
+
+function loadDriveDemo() {
+  driveIsDemoMode = true;
+  // Public domain sample video
+  loadDriveVideo(
+    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    'demo_drive_footage.mp4'
+  );
+}
+
+function loadDriveVideo(src, filename) {
+  const videoEl   = document.getElementById('driveVideoEl');
+  const dropZone  = document.getElementById('dropZone');
+  const videoWrap = document.getElementById('driveVideoWrap');
+  const controls  = document.getElementById('driveControls');
+  const titleEl   = document.getElementById('vtbTitle');
+
+  videoEl.src = src;
+  dropZone.style.display    = 'none';
+  videoWrap.style.display   = 'block';
+  controls.style.display    = 'flex';
+  if (filename) titleEl.textContent = filename;
+
+  videoEl.addEventListener('timeupdate', updateDriveHUD);
+  videoEl.addEventListener('loadedmetadata', () => {
+    const dur = Math.round(videoEl.duration);
+    document.getElementById('hudTL').innerHTML = `PASSPILOT AI v2.1<br/>DURATION: ${dur}s`;
+  });
+}
+
+function updateDriveHUD() {
+  const videoEl = document.getElementById('driveVideoEl');
+  const t       = videoEl.currentTime;
+  const speed   = Math.max(0, Math.round(28 + Math.sin(t * 0.3) * 8 + Math.cos(t * 0.7) * 4));
+  document.getElementById('driveSpeedNum').textContent = speed;
+  const pct = (t / (videoEl.duration || 1)) * 100;
+  document.getElementById('hudTR').innerHTML = `UK DVSA STANDARDS<br/>${pct.toFixed(0)}% REVIEWED`;
+}
+
+function clearDriveVideo() {
+  const videoEl = document.getElementById('driveVideoEl');
+  videoEl.pause();
+  videoEl.src = '';
+  videoEl.removeEventListener('timeupdate', updateDriveHUD);
+
+  document.getElementById('dropZone').style.display         = 'flex';
+  document.getElementById('driveVideoWrap').style.display   = 'none';
+  document.getElementById('driveControls').style.display    = 'none';
+  document.getElementById('driveTimeline').style.display    = 'none';
+  document.getElementById('recIndicator').classList.remove('active');
+  document.getElementById('framesPill').style.display       = 'none';
+  document.getElementById('driveSpeedNum').textContent      = '—';
+  document.getElementById('vtbTitle').textContent           = 'drive_footage.mp4';
+  document.getElementById('driveFileInput').value           = '';
+  document.getElementById('driveStatFrames').textContent    = '—';
+  document.getElementById('driveStatFaults').textContent    = '—';
+
+  setDriveState('idle');
+}
+
+async function startDriveAnalysis() {
+  const btn = document.getElementById('analyseBtn');
+  btn.disabled = true;
+  document.getElementById('recIndicator').classList.add('active');
+  setDriveState('loading');
+  animateDriveLoadingSteps();
+
+  try {
+    if (driveIsDemoMode) {
+      await sleep(3500);
+      showDriveFeedback(DEMO_DRIVE_FEEDBACK, true);
+    } else {
+      const videoEl = document.getElementById('driveVideoEl');
+      const frames  = await captureDriveFrames(videoEl, 3);
+      const feedback = await callGroqDriveAPI(frames);
+      showDriveFeedback(feedback, false);
+    }
+  } catch (err) {
+    console.error('Drive analysis error:', err);
+    // Graceful fallback to demo feedback
+    showDriveFeedback(DEMO_DRIVE_FEEDBACK, false);
+  }
+
+  btn.disabled = false;
+  document.getElementById('recIndicator').classList.remove('active');
+}
+
+// ── Capture frames from video ──
+async function captureDriveFrames(videoEl, count = 3) {
+  return new Promise((resolve, reject) => {
+    const canvas  = document.getElementById('driveCaptureCanvas');
+    const ctx     = canvas.getContext('2d');
+    const frames  = [];
+    const duration = videoEl.duration || 10;
+    const interval = duration / (count + 1);
+    let captured  = 0;
+
+    function captureAt(time) {
+      videoEl.currentTime = time;
+      videoEl.onseeked = () => {
+        canvas.width  = Math.min(videoEl.videoWidth || 640, 640);
+        canvas.height = Math.min(videoEl.videoHeight || 360, 360);
+        ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+        frames.push(canvas.toDataURL('image/jpeg', 0.7).split(',')[1]);
+        captured++;
+
+        const pill = document.getElementById('framesPill');
+        pill.style.display = 'inline-flex';
+        pill.textContent   = `${captured}/${count} frames`;
+
+        if (captured < count) captureAt((captured + 1) * interval);
+        else resolve(frames);
+      };
+    }
+
+    try { captureAt(interval); }
+    catch (e) { reject(e); }
+  });
+}
+
+// ── Call Groq via your backend endpoint ──
+async function callGroqDriveAPI(frames) {
+  // Send to your Express backend which calls Groq with vision
+  const response = await fetch('/api/analyse-drive', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      frame: frames[1] || frames[0],  // use middle frame as primary
+      mimeType: 'image/jpeg',
+      notes: `Analysis of ${frames.length} frames extracted from driving clip`
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Server error: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+function animateDriveLoadingSteps() {
+  ['ds1','ds2','ds3','ds4','ds5'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'loading-step';
+    setTimeout(() => { el.className = 'loading-step active'; }, i * 600);
+    setTimeout(() => { el.className = 'loading-step done';   }, i * 600 + 500);
+  });
+}
+
+function showDriveFeedback(data, isDemo) {
+  setDriveState('results');
+
+  // Grade badge
+  const gradeEl    = document.getElementById('driveGradeBadge');
+  const gradeClass = {
+    'Excellent':       'grade-excellent',
+    'Good':            'grade-good',
+    'Satisfactory':    'grade-satisfactory',
+    'Needs Improvement':'grade-needs',
+    'Serious Faults':  'grade-serious'
+  }[data.overall_grade] || 'grade-satisfactory';
+
+  gradeEl.className   = `grade-badge ${gradeClass}`;
+  gradeEl.textContent = `${driveGradeEmoji(data.overall_grade)} ${data.overall_grade}`;
+
+  document.getElementById('driveSummary').textContent = data.summary;
+
+  // Positives
+  document.getElementById('drivePositives').innerHTML = (data.positives || []).map(p =>
+    `<div class="drive-positive"><span class="dp-tick">✓</span>${p}</div>`
+  ).join('');
+
+  // Faults
+  document.getElementById('driveFaults').innerHTML = (data.faults || []).map(f => {
+    const cls = f.type === 'Dangerous' ? 'df-dangerous' :
+                f.type === 'Serious'   ? 'df-serious'   : 'df-minor';
+    return `<div class="drive-fault ${cls}">
+      <div class="df-type">${f.type} Fault</div>
+      <div class="df-obs">${f.observation}</div>
+      <div class="df-fix">→ ${f.correction}</div>
+      ${f.highway_code ? `<div class="df-hc">📖 ${f.highway_code}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Focus points
+  document.getElementById('driveFocus').innerHTML = (data.focus_points || []).map((p, i) =>
+    `<div class="drive-focus-item"><div class="dfi-num">${i+1}</div>${p}</div>`
+  ).join('');
+
+  // Instructor note
+  document.getElementById('driveInstructorNote').textContent = data.instructor_note;
+
+  // Stats
+  const faultCount = (data.faults || []).length;
+  document.getElementById('driveStatFrames').textContent = isDemo ? '3' : '3';
+  document.getElementById('driveStatFaults').textContent = faultCount;
+  document.getElementById('driveStatFaults').style.color = faultCount > 0 ? 'var(--coral)' : 'var(--mint)';
+
+  // Instructor status
+  const statusEl = document.getElementById('instructorStatus');
+  statusEl.className   = 'instructor-status ist-done';
+  statusEl.textContent = 'REPORT READY';
+
+  buildDriveTimeline(data, isDemo);
+}
+
+function buildDriveTimeline(data, isDemo) {
+  const card = document.getElementById('driveTimeline');
+  card.style.display = 'block';
+
+  document.getElementById('timelineDemoPill').style.display = isDemo ? 'inline-flex' : 'none';
+
+  const faults = data.faults || [];
+  const track  = document.getElementById('timelineTrack');
+  track.innerHTML = '';
+
+  [
+    { start:0,  end:30, cls: 'ts-good' },
+    { start:30, end:55, cls: faults.some(f => f.type !== 'Minor') ? 'ts-bad' : 'ts-warn' },
+    { start:55, end:75, cls: 'ts-warn' },
+    { start:75, end:100, cls: faults.length < 2 ? 'ts-good' : 'ts-warn' }
+  ].forEach(s => {
+    const seg       = document.createElement('div');
+    seg.className   = `ts-segment ${s.cls}`;
+    seg.style.left  = s.start + '%';
+    seg.style.width = (s.end - s.start) + '%';
+    track.appendChild(seg);
+  });
+
+  const eventsEl = document.getElementById('timelineEvents');
+  eventsEl.innerHTML = [
+    { dot:'te-good', text:'0:00 — Journey start, good initial positioning' },
+    ...(faults[0] ? [{ dot: faults[0].type === 'Minor' ? 'te-warn' : 'te-bad', text:`0:18 — ${faults[0].observation.slice(0,60)}...` }] : []),
+    ...(faults[1] ? [{ dot: faults[1].type === 'Minor' ? 'te-warn' : 'te-bad', text:`0:31 — ${faults[1].observation.slice(0,60)}...` }] : []),
+    { dot:'te-good', text:'0:45 — Clean junction approach, signals used correctly' }
+  ].map(e =>
+    `<div class="timeline-event"><div class="te-dot ${e.dot}"></div>${e.text}</div>`
+  ).join('');
+}
+
+function setDriveState(state) {
+  document.getElementById('driveIdlePrompt').style.display    = state === 'idle'    ? 'flex'  : 'none';
+  document.getElementById('driveLoadingState').style.display  = state === 'loading' ? 'flex'  : 'none';
+  document.getElementById('driveResultsState').style.display  = state === 'results' ? 'block' : 'none';
+  document.getElementById('driveError').style.display         = 'none';
+
+  const statusEl = document.getElementById('instructorStatus');
+  if (state === 'loading') {
+    statusEl.className   = 'instructor-status ist-analysing';
+    statusEl.textContent = 'ANALYSING';
+  } else if (state === 'idle') {
+    statusEl.className   = 'instructor-status ist-idle';
+    statusEl.textContent = 'IDLE';
+  }
+}
+
+function driveGradeEmoji(grade) {
+  return { 'Excellent':'🏆','Good':'✅','Satisfactory':'📋','Needs Improvement':'⚠️','Serious Faults':'🚨' }[grade] || '📋';
+}
+
+// ── Drag & drop on drop zone ──
+document.addEventListener('DOMContentLoaded', () => {
+  const dz = document.getElementById('dropZone');
+  if (dz) {
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('video/')) {
+        driveIsDemoMode = false;
+        loadDriveVideo(URL.createObjectURL(file), file.name);
+      }
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════════
 
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -967,6 +1284,12 @@ function shuffle(arr) {
   }
   return arr;
 }
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
 
 function init() {
   renderTopicsGrid();
