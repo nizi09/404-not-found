@@ -3,20 +3,7 @@
 
 > AI-powered UK theory test prep & practical test companion. Built at [Hackathon] by Team 404-Not-Found.
 
----
-
-## What it does
-
-- 🧠 **Mock Theory Tests** — 50-question DVSA-aligned bank, served in randomised 25-question sessions
-- 🤖 **AI Co-Pilot** (Hybrid Mode) — sends your results to Claude API, returns a personalised revision plan
-- 📊 **Dashboard** — score trends, topic breakdown, streak, achievements
-- 🗓️ **Booking Guide** — step-by-step practical test booking walkthrough
-- ✅ **Readiness Checker** — tells you honestly if you're ready to book
-
----
-
-## File ownership
-
+-
 | File | Owner |
 |------|-------|
 | `index.html` | Frontend |

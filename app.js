@@ -618,7 +618,7 @@ async function fetchAISuggestion(result) {
   const prompt = buildAIPrompt(result);
 
   try {
-    const apiKey = 'AIzaSyDQunnsF7vPmcf1OZzgtujC7CjF3Iv-LR0';
+    const apiKey = 'AIzaSyBiy2NIUefPWf_m40BxulslvKcAbeTKkwI';
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
       {
