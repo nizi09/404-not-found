@@ -1,0 +1,483 @@
+{
+  "questions": [
+  {
+    "category": "speed_limits",
+    "question": "You are driving on a road with a 30 mph speed limit and it starts raining heavily. What should you do?",
+    "options": [
+      "Keep driving at 30 mph",
+      "Drive faster to reach your destination sooner",
+      "Slow down if necessary and stay within the speed limit",
+      "Brake suddenly"
+    ],
+    "correct": 2,
+    "explanation": "The speed limit is the maximum speed under ideal conditions. Heavy rain reduces grip and increases stopping distances, so it is safer to reduce your speed while staying within the 30 mph limit. Driving at the same speed or faster could be unsafe, and braking suddenly could cause skidding."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are approaching a zebra crossing and a pedestrian is waiting to cross. What should you do?",
+    "options": [
+      "Continue if they haven't stepped onto the road",
+      "Slow down and be prepared to stop",
+      "Sound your horn",
+      "Speed up before they cross"
+    ],
+    "correct": 1,
+    "explanation": "At a zebra crossing, pedestrians have priority. You must always be ready to stop if someone steps onto the crossing. Continuing or trying to rush past is dangerous, and sounding the horn could scare pedestrians."
+  },
+  {
+    "category": "road_signs",
+    "question": "You see a warning sign for a sharp bend ahead. What should you do first?",
+    "options": [
+      "Accelerate",
+      "Slow down",
+      "Overtake the vehicle in front",
+      "Move into the opposite lane"
+    ],
+    "correct": 1,
+    "explanation": "Warning signs alert you to potential hazards, like a sharp bend. You should reduce speed before entering the bend to maintain control. Accelerating, overtaking, or moving into the opposite lane is unsafe."
+  },
+  {
+    "category": "safety",
+    "question": "You are driving behind another car on a dry road. What is a safe following distance?",
+    "options": [
+      "1 second behind",
+      "2 seconds behind",
+      "Right behind them",
+      "As close as possible in traffic"
+    ],
+    "correct": 1,
+    "explanation": "The 2-second rule is the minimum safe distance on a dry road. It gives enough time to stop if the car ahead brakes suddenly. All other options are too close and are unsafe."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are driving and see a cyclist ahead in your lane. What should you do?",
+    "options": [
+      "Overtake immediately",
+      "Sound your horn repeatedly",
+      "Slow down and give them plenty of space",
+      "Drive very close behind them"
+    ],
+    "correct": 2,
+    "explanation": "Cyclists are vulnerable. You should reduce speed and allow enough room to pass safely. Honking or driving too close can be dangerous, and overtaking immediately may not be safe."
+  },
+  {
+    "category": "road_rules",
+    "question": "You approach traffic lights that have just turned amber. What should you do?",
+    "options": [
+      "Speed up to get through",
+      "Stop if it is safe to do so",
+      "Ignore the lights",
+      "Turn quickly"
+    ],
+    "correct": 1,
+    "explanation": "Amber means stop unless it is unsafe to do so (e.g., you're too close to stop safely). Speeding up or ignoring is illegal and unsafe."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are approaching a junction with poor visibility. What should you do?",
+    "options": [
+      "Drive straight out quickly",
+      "Slow down and check carefully for traffic",
+      "Ignore other vehicles",
+      "Close your eyes briefly"
+    ],
+    "correct": 1,
+    "explanation": "At a junction with limited visibility, you need to assess potential hazards before entering. Driving straight out or ignoring traffic is unsafe, and closing your eyes is obviously wrong."
+  },
+  {
+    "category": "road_signs",
+    "question": "You see signs warning of road works ahead. What should you expect?",
+    "options": [
+      "No changes to the road",
+      "Workers and possible lane closures",
+      "Higher speed limits",
+      "Empty roads"
+    ],
+    "correct": 1,
+    "explanation": "Road work signs warn of temporary hazards like lane closures or workers on the road. You should reduce speed and stay alert. The other options are incorrect, and an empty road is unsafe to assume."
+  },
+  {
+    "category": "safety",
+    "question": "You hear a siren from an emergency vehicle behind you. What should you do?",
+    "options": [
+      "Ignore it",
+      "Stop immediately in the middle of the road",
+      "Move safely to allow it to pass",
+      "Drive faster"
+    ],
+    "correct": 2,
+    "explanation": "You must give way to emergency vehicles. This usually means moving to the left or stopping safely. Stopping in the middle, ignoring it, or speeding is dangerous and illegal."
+  },
+  {
+    "category": "road_signs",
+    "question": "You see a slippery road warning sign. What should you do?",
+    "options": [
+      "Brake sharply",
+      "Drive normally without changes",
+      "Reduce speed smoothly",
+      "Accelerate"
+    ],
+    "correct": 2,
+    "explanation": "A slippery road sign warns of hazards like ice, wet leaves, or oil. Reducing speed gradually helps maintain control. Braking suddenly or accelerating can cause skidding."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are approaching a roundabout. What should you do first?",
+    "options": [
+      "Speed up",
+      "Check traffic and give way to vehicles already on the roundabout",
+      "Ignore road markings",
+      "Enter quickly"
+    ],
+    "correct": 1,
+    "explanation": "Vehicles already on the roundabout have priority. You should slow, look, and give way if necessary. Speeding up, ignoring markings, or entering quickly is unsafe."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are driving down a street with many parked cars. What is the safest approach?",
+    "options": [
+      "Drive fast through gaps",
+      "Slow down and watch for people stepping out",
+      "Ignore the parked cars",
+      "Overtake everything quickly"
+    ],
+    "correct": 1,
+    "explanation": "Parked cars can hide hazards like doors opening or pedestrians stepping into the road. Slowing down and staying alert helps you avoid accidents. Driving fast or ignoring them is risky."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are driving at night and an oncoming vehicle has its full beams on. What should you do?",
+    "options": [
+      "Flash your headlights repeatedly",
+      "Look directly at their lights",
+      "Slow down and look towards the left side of the road",
+      "Speed up"
+    ],
+    "correct": 2,
+    "explanation": "Looking towards the left edge of the road helps avoid being dazzled while maintaining control of your vehicle."
+  },
+  {
+    "category": "road_rules",
+    "question": "What should you do before changing lanes on a motorway?",
+    "options": [
+      "Just steer into the next lane",
+      "Check mirrors and blind spots, then signal",
+      "Honk your horn",
+      "Accelerate without looking"
+    ],
+    "correct": 1,
+    "explanation": "You must check mirrors and blind spots and signal before changing lanes to ensure it is safe."
+  },
+  {
+    "category": "road_rules",
+    "question": "You see double solid white lines in the centre of the road. What do they mean?",
+    "options": [
+      "You may overtake at any time",
+      "You must not cross or straddle them (except in specific circumstances)",
+      "They are only advisory",
+      "They mark a parking area"
+    ],
+    "correct": 1,
+    "explanation": "Double solid white lines mean you must not cross or straddle them except in limited permitted situations."
+  },
+  {
+    "category": "road_signs",
+    "question": "What does a red circular road sign usually indicate?",
+    "options": [
+      "Information",
+      "Warning",
+      "Mandatory instruction or prohibition",
+      "Direction"
+    ],
+    "correct": 2,
+    "explanation": "Red circular signs give mandatory instructions or indicate prohibitions."
+  },
+  {
+    "category": "safety",
+    "question": "When should you use hazard warning lights?",
+    "options": [
+      "When parked legally",
+      "When warning others of a hazard or obstruction",
+      "When driving in rain",
+      "At all junctions"
+    ],
+    "correct": 1,
+    "explanation": "Hazard lights are used to warn other drivers of a hazard or obstruction. They should not be used while driving normally or parked legally unless warning of a hazard."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are driving on a dual carriageway and wish to turn right. What should you do?",
+    "options": [
+      "Stop and wait in your lane",
+      "Use the central reservation to wait if it is safe and wide enough",
+      "Make a U-turn",
+      "Cross all lanes quickly"
+    ],
+    "correct": 1,
+    "explanation": "If the central reservation is wide enough, you can wait there safely to complete the right turn."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are driving behind a large lorry. Why should you increase your following distance?",
+    "options": [
+      "Lorries always brake faster",
+      "Your view ahead is restricted and stopping distance is greater",
+      "It is a legal requirement",
+      "Lorries accelerate more slowly"
+    ],
+    "correct": 1,
+    "explanation": "Large vehicles block your view of the road ahead and require more distance to stop safely."
+  },
+  {
+    "category": "safety",
+    "question": "You are driving and feel very tired. What should you do?",
+    "options": [
+      "Open a window and continue",
+      "Turn up the radio",
+      "Stop in a safe place and rest",
+      "Drive faster to reach your destination sooner"
+    ],
+    "correct": 2,
+    "explanation": "Tiredness seriously impairs driving. You must stop and rest. Opening a window or turning up the radio are not effective solutions."
+  },
+  {
+    "category": "road_signs",
+    "question": "A sign shows a white arrow on a blue background pointing ahead. What does this mean?",
+    "options": [
+      "Advisory direction only",
+      "You must go ahead",
+      "One-way street optional",
+      "No entry"
+    ],
+    "correct": 1,
+    "explanation": "A white arrow on a blue circle is a mandatory sign meaning you must proceed in that direction."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are parked on a hill facing downhill. Which way should you turn your wheels?",
+    "options": [
+      "Straight ahead",
+      "To the left towards the kerb",
+      "To the right away from the kerb",
+      "It does not matter"
+    ],
+    "correct": 1,
+    "explanation": "Turning wheels towards the kerb when facing downhill prevents the vehicle from rolling into traffic if the brakes fail."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You see a pedestrian with a white cane at the roadside. What should you do?",
+    "options": [
+      "Drive past quickly",
+      "Sound your horn to alert them",
+      "Slow down and be prepared to stop",
+      "Ignore them as they are on the pavement"
+    ],
+    "correct": 2,
+    "explanation": "A white cane indicates the person is visually impaired. You must slow down and be ready to stop to give them time and space."
+  },
+  {
+    "category": "safety",
+    "question": "You are dazzled by the sun while driving. What should you do?",
+    "options": [
+      "Speed up to clear the area",
+      "Slow down and, if necessary, stop safely",
+      "Ignore it"
+    ],
+    "correct": 1,
+    "explanation": "If visibility is reduced by glare, you should slow down and stop safely if needed."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are following a motorcyclist in slow-moving traffic. What should you remember?",
+    "options": [
+      "They will always stay in the centre of the lane",
+      "They may move to avoid hazards like drain covers or potholes",
+      "They do not need much space",
+      "You can follow more closely than a car"
+    ],
+    "correct": 1,
+    "explanation": "Motorcyclists may change position to avoid hazards, so give them space."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are approaching a railway level crossing with flashing red lights. What must you do?",
+    "options": [
+      "Stop before the white line",
+      "Slow down and proceed carefully",
+      "Continue if no train is visible",
+      "Stop only if the barrier is down"
+    ],
+    "correct": 0,
+    "explanation": "Flashing red lights mean you must stop before the white line, even if no train is visible."
+  },
+  {
+    "category": "safety",
+    "question": "What is the main purpose of anti-lock braking systems (ABS)?",
+    "options": [
+      "To shorten stopping distance in all conditions",
+      "To prevent the wheels from locking during braking",
+      "To increase acceleration",
+      "To reduce fuel consumption"
+    ],
+    "correct": 1,
+    "explanation": "ABS prevents wheel lock-up, helping the driver maintain steering control during emergency braking."
+  },
+  {
+    "category": "road_rules",
+    "question": "When driving in heavy traffic on a motorway, why should you avoid unnecessary lane changes?",
+    "options": [
+      "It reduces fuel only",
+      "It increases overall traffic flow and reduces risk",
+      "It is illegal",
+      "It makes no difference"
+    ],
+    "correct": 1,
+    "explanation": "Unnecessary lane changes increase risk and can disrupt traffic flow."
+  },
+  {
+    "category": "road_signs",
+    "question": "You see a triangular sign showing two arrows in opposite directions. What does this mean?",
+    "options": [
+      "Two-way traffic crossing a one-way road",
+      "Dual carriageway ahead",
+      "One-way street",
+      "No entry"
+    ],
+    "correct": 0,
+    "explanation": "This warning sign indicates two-way traffic crossing a one-way road."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are parking facing uphill without a kerb. What should you do after applying the handbrake?",
+    "options": [
+      "Leave the wheels straight",
+      "Turn the wheels slightly to the right",
+      "Turn the wheels slightly to the left",
+      "Release the handbrake"
+    ],
+    "correct": 1,
+    "explanation": "Turning the wheels to the right reduces the risk of the vehicle rolling into traffic."
+  },
+  {
+    "category": "safety",
+    "question": "You are driving on a wet motorway. What is the minimum safe following distance at 70 mph?",
+    "options": [
+      "2 seconds",
+      "3 seconds",
+      "4 seconds",
+      "1 second"
+    ],
+    "correct": 2,
+    "explanation": "In wet conditions, you should double the normal two-second rule to at least four seconds."
+  },
+  {
+    "category": "road_rules",
+    "question": "You are turning right at a crossroads and an oncoming vehicle is also turning right. What is the safest course of action?",
+    "options": [
+      "Pass in front of each other",
+      "Pass behind each other",
+      "Turn without checking",
+      "Flash headlights and go first"
+    ],
+    "correct": 1,
+    "explanation": "Passing behind each other gives better visibility and reduces the risk of collision."
+  },
+  {
+    "category": "road_signs",
+    "question": "You see a triangular sign showing a car with wavy skid marks behind it. What does this mean?",
+    "options": [
+      "Uneven road surface",
+      "Slippery road ahead",
+      "Loose chippings",
+      "Road narrows"
+    ],
+    "correct": 1,
+    "explanation": "This warning sign indicates that the road may be slippery ahead."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are driving in heavy rain and your steering suddenly feels light. What is most likely happening?",
+    "options": [
+      "Engine failure",
+      "Brake fade",
+      "Aquaplaning",
+      "Power steering fault"
+    ],
+    "correct": 2,
+    "explanation": "Aquaplaning occurs when tyres lose contact with the road surface due to water."
+  },
+  {
+    "category": "road_rules",
+    "question": "At night, you are following another vehicle on a well-lit road. Which lights should you use?",
+    "options": [
+      "Full beam headlights",
+      "Dipped headlights",
+      "Front fog lights only",
+      "Hazard lights"
+    ],
+    "correct": 1,
+    "explanation": "Use dipped headlights when following another vehicle to avoid dazzling them."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are waiting to emerge from a side road. Large vehicles parked near the junction are restricting your view. What should you do?",
+    "options": [
+      "Edge out slowly until you can see clearly",
+      "Drive out quickly",
+      "Sound your horn continuously",
+      "Wait for another driver to signal you out"
+    ],
+    "correct": 0,
+    "explanation": "Carefully edging forward improves visibility while maintaining safety."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are driving through a residential area and see a ball roll into the road ahead. What should you anticipate?",
+    "options": [
+      "Nothing further",
+      "An animal crossing",
+      "A child running after the ball",
+      "Another vehicle stopping suddenly"
+    ],
+    "correct": 2,
+    "explanation": "Children often follow balls into the road without looking."
+  },
+  {
+    "category": "safety",
+    "question": "What is the main danger of driving in icy conditions?",
+    "options": [
+      "Reduced engine performance",
+      "Increased fuel use",
+      "Loss of tyre grip and longer stopping distances",
+      "Brighter headlights"
+    ],
+    "correct": 2,
+    "explanation": "Ice significantly reduces tyre grip, increasing stopping distances."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You approach a junction controlled by traffic lights. The green light has been on for some time. What should you expect?",
+    "options": [
+      "It will stay green",
+      "It may change to amber soon",
+      "It will change directly to red",
+      "You have priority regardless"
+    ],
+    "correct": 1,
+    "explanation": "A green light that has been on for a while may soon change, so be prepared to stop."
+  },
+  {
+    "category": "hazard_perception",
+    "question": "You are overtaking a large lorry on a dual carriageway. What should you be particularly aware of?",
+    "options": [
+      "The lorry may suddenly stop",
+      "Reduced visibility and wind turbulence",
+      "Increased speed limit",
+      "Better fuel efficiency"
+    ],
+    "correct": 1,
+    "explanation": "Large vehicles create wind turbulence and can restrict visibility when overtaking."
+  }
+  ]
+}
