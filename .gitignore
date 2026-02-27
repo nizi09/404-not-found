@@ -1,3 +1,6 @@
 .env
-node_modules
+node_modules/
 config.js
+sessions.log
+*.log
+.DS_Store

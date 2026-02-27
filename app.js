@@ -446,6 +446,30 @@ function renderQuestion() {
     </button>`;
   }).join('');
 
+  // Render question map dots
+  let mapEl = document.getElementById('questionMap');
+  if (!mapEl) {
+    const nav = document.querySelector('.question-nav');
+    if (nav) {
+      mapEl = document.createElement('div');
+      mapEl.id = 'questionMap';
+      mapEl.style.cssText = 'display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem;justify-content:center;';
+      nav.parentNode.insertBefore(mapEl, nav);
+    }
+  }
+  if (mapEl) {
+    mapEl.innerHTML = currentQuestions.map((_, i) => {
+      const answered = userAnswers[i] !== undefined;
+      const isCurrent = i === currentQIndex;
+      const bg = isCurrent ? 'var(--indigo)' : answered ? 'var(--mint)' : '#d1d5db';
+      const border = isCurrent ? '2px solid #fff' : '2px solid transparent';
+      return `<button onclick="jumpToQuestion(${i})" title="Question ${i+1}"
+        style="width:24px;height:24px;border-radius:50%;background:${bg};border:${border};
+        cursor:pointer;font-size:.65rem;font-weight:700;color:${answered||isCurrent?'#fff':'#555'};
+        box-shadow:${isCurrent?'0 0 0 2px var(--indigo)':'none'}">${i+1}</button>`;
+    }).join('');
+  }
+
   document.getElementById('prevBtn').style.visibility = currentQIndex === 0 ? 'hidden' : 'visible';
   document.getElementById('nextBtn').textContent = currentQIndex === total - 1 ? 'Finish Test ✓' : 'Next →';
 }
@@ -462,8 +486,21 @@ function nextQuestion() {
     currentQIndex++;
     renderQuestion();
   } else {
+    const unanswered = currentQuestions.reduce((count, _, i) => {
+      return userAnswers[i] === undefined ? count + 1 : count;
+    }, 0);
+    if (unanswered > 0) {
+      if (!confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Submit anyway?`)) {
+        return;
+      }
+    }
     finishTest();
   }
+}
+
+function jumpToQuestion(index) {
+  currentQIndex = index;
+  renderQuestion();
 }
 
 function prevQuestion() {
@@ -481,6 +518,9 @@ function resetToModeSelect() {
   document.getElementById('activeTest').classList.add('hidden');
   document.getElementById('testResults').classList.add('hidden');
   document.getElementById('modeSelect').classList.remove('hidden');
+  // Clean up question map if it exists
+  const mapEl = document.getElementById('questionMap');
+  if (mapEl) mapEl.remove();
 }
 
 function startTimer() {
@@ -713,13 +753,14 @@ function generateFallbackSuggestion(result) {
 }
 
 function formatAISuggestion(text) {
-  return text
+  const formatted = text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/^#{1,3}\s(.+)$/gm, '<h4>$1</h4>')
     .replace(/^•\s(.+)$/gm, '<div style="margin:.3rem 0;padding-left:1rem">• $1</div>')
     .replace(/\n\n/g, '</p><p style="margin-top:.75rem">')
     .replace(/\n/g, '<br/>');
+  return `<p>${formatted}</p>`;
 }
 
 function acceptSuggestion() {
@@ -736,7 +777,7 @@ function acceptSuggestion() {
 
 function editSuggestion() {
   document.getElementById('aiEditArea').classList.remove('hidden');
-  document.getElementById('aiEditText').value = aiSuggestion.replace(/<[^>]+>/g,'');
+  document.getElementById('aiEditText').value = aiSuggestion;
   document.getElementById('aiActions').classList.add('hidden');
 }
 
@@ -1065,17 +1106,17 @@ async function startDriveAnalysis() {
   try {
     if (driveIsDemoMode) {
       await sleep(3500);
-      showDriveFeedback(DEMO_DRIVE_FEEDBACK, true);
+      showDriveFeedback(DEMO_DRIVE_FEEDBACK, true, 3);
     } else {
       const videoEl = document.getElementById('driveVideoEl');
       const frames  = await captureDriveFrames(videoEl, 3);
       const feedback = await callGroqDriveAPI(frames);
-      showDriveFeedback(feedback, false);
+      showDriveFeedback(feedback, false, frames.length);
     }
   } catch (err) {
     console.error('Drive analysis error:', err);
     // Graceful fallback to demo feedback
-    showDriveFeedback(DEMO_DRIVE_FEEDBACK, false);
+    showDriveFeedback(DEMO_DRIVE_FEEDBACK, false, 0);
   }
 
   btn.disabled = false;
@@ -1144,7 +1185,7 @@ function animateDriveLoadingSteps() {
   });
 }
 
-function showDriveFeedback(data, isDemo) {
+function showDriveFeedback(data, isDemo, frameCount) {
   setDriveState('results');
 
   // Grade badge
@@ -1189,7 +1230,7 @@ function showDriveFeedback(data, isDemo) {
 
   // Stats
   const faultCount = (data.faults || []).length;
-  document.getElementById('driveStatFrames').textContent = isDemo ? '3' : '3';
+  document.getElementById('driveStatFrames').textContent = isDemo ? '3 (demo)' : (frameCount ?? 3);
   document.getElementById('driveStatFaults').textContent = faultCount;
   document.getElementById('driveStatFaults').style.color = faultCount > 0 ? 'var(--coral)' : 'var(--mint)';
 

@@ -2,29 +2,45 @@
 
 const https = require('https');
 
+/**
+ * Get an AI revision suggestion from Groq based on test results.
+ * @param {Object} results - The results object from calculateResults()
+ * @param {Function} callback - Node-style callback(err, suggestion)
+ */
 function getAISuggestion(results, callback) {
-  const prompt = `You are PassPilot, an AI assistant helping a UK learner driver prepare for their theory test.
-Here are their latest test results:
-- Score: ${results.score}%
-- Readiness: ${results.readiness}
-- Weak areas: ${results.weak_areas.join(', ')}
-- Total questions: ${results.total_questions}
-Give them:
-1. A short encouraging message (1-2 sentences)
-2. Their top 2 weak areas to focus on with specific tips
-3. One specific revision action for this week
-Keep it friendly, concise and actionable. Max 100 words. UK spelling.`;
-
   const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) {
+    return callback(new Error('GROQ_API_KEY is not set in environment'), null);
+  }
+
+  const weakLabels = (results.weak_areas || []).join(', ') || 'None identified';
+
+  const prompt = `You are PassPilot, an AI co-pilot for UK learner drivers preparing for their theory test.
+
+A student just completed a mock theory test:
+- Score: ${results.scorePercent ?? results.score}% (${results.correct}/${results.total_questions} correct)
+- Weak areas: ${weakLabels}
+- Passed: ${results.passed ? 'Yes' : 'No (need 86% to pass)'}
+
+Give a friendly, encouraging, specific revision plan:
+1. A brief encouraging message (1-2 sentences)
+2. Top 2-3 priority topics to revise with specific tips
+3. A suggested study action for this week
+4. One motivational sign-off line
+
+Keep it concise, warm and practical. UK spelling.`;
 
   const body = JSON.stringify({
     model: 'llama-3.3-70b-versatile',
     messages: [
-      { role: 'system', content: 'You are PassPilot, a friendly UK driving theory test coach.' },
-      { role: 'user', content: prompt }
+      {
+        role: 'system',
+        content: 'You are PassPilot, a friendly and encouraging UK driving theory test coach. UK spelling throughout.',
+      },
+      { role: 'user', content: prompt },
     ],
-    max_tokens: 300,
-    temperature: 0.7
+    max_tokens: 400,
+    temperature: 0.7,
   });
 
   const options = {
@@ -33,36 +49,27 @@ Keep it friendly, concise and actionable. Max 100 words. UK spelling.`;
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Length': Buffer.byteLength(body)
-    }
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Length': Buffer.byteLength(body),
+    },
   };
 
   const req = https.request(options, (res) => {
-    let responseBody = '';
-    res.on('data', (chunk) => { responseBody += chunk; });
+    let data = '';
+    res.on('data', (chunk) => { data += chunk; });
     res.on('end', () => {
       try {
-        const parsed = JSON.parse(responseBody);
-        console.log('Groq raw response:', JSON.stringify(parsed));
-
-        if (parsed.error) {
-          callback(new Error(parsed.error.message), null);
-          return;
-        }
-
+        const parsed = JSON.parse(data);
+        if (parsed.error) return callback(new Error(parsed.error.message), null);
         const suggestion = parsed.choices[0].message.content;
         callback(null, suggestion);
       } catch (e) {
-        callback(e, null);
+        callback(new Error('Failed to parse Groq response: ' + e.message), null);
       }
     });
   });
 
-  req.on('error', (err) => {
-    callback(err, null);
-  });
-
+  req.on('error', (err) => callback(err, null));
   req.write(body);
   req.end();
 }

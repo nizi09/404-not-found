@@ -1,53 +1,45 @@
-function calculateResults(userAnswers, questions) {
+'use strict';
+
+/**
+ * Calculate test results from answers and questions.
+ * @param {number[]} answers - Array of selected answer indices
+ * @param {Object[]} questions - Array of question objects with `answer` and `category`
+ * @returns {Object} results summary
+ */
+function calculateResults(answers, questions) {
   let correct = 0;
-  let categoryResults = {};
+  const topicScores = {};
 
-  questions.forEach(function(question, index) {
-    const category = question.category;
-    const isCorrect = userAnswers[index] === question.correct;
-
-    if (!categoryResults[category]) {
-      categoryResults[category] = { correct: 0, total: 0 };
-    }
-
-    categoryResults[category].total++;
-    if (isCorrect) {
+  questions.forEach((q, i) => {
+    const cat = q.category;
+    if (!topicScores[cat]) topicScores[cat] = { correct: 0, total: 0 };
+    topicScores[cat].total++;
+    if (answers[i] === q.answer) {
       correct++;
-      categoryResults[category].correct++;
+      topicScores[cat].correct++;
     }
   });
 
-  const scorePercent = Math.round((correct / questions.length) * 100);
-  const weakAreas = findWeakAreas(categoryResults);
-  const readiness = calculateReadiness(scorePercent, weakAreas);
+  const total = questions.length;
+  const scorePercent = total > 0 ? Math.round((correct / total) * 100) : 0;
+  const passMark = 86;
+  const passed = scorePercent >= passMark;
+
+  const weakAreas = Object.entries(topicScores)
+    .filter(([, v]) => v.total > 0 && (v.correct / v.total) < 0.7)
+    .map(([k]) => k);
 
   return {
     score: scorePercent,
-    correct: correct,
-    total_questions: questions.length,
+    scorePercent,
+    correct,
+    wrong: total - correct,
+    total_questions: total,
     weak_areas: weakAreas,
-    category_breakdown: categoryResults,
-    readiness: readiness
+    topicScores,
+    passed,
+    date: new Date().toLocaleDateString('en-GB'),
   };
-}
-
-function findWeakAreas(categoryResults) {
-  let weakAreas = [];
-  for (let category in categoryResults) {
-    const result = categoryResults[category];
-    const percent = (result.correct / result.total) * 100;
-    if (percent < 70) {
-      weakAreas.push(category);
-    }
-  }
-  return weakAreas;
-}
-
-function calculateReadiness(score, weakAreas) {
-  if (score >= 86 && weakAreas.length === 0) return "Ready";
-  if (score >= 70 && weakAreas.length <= 1) return "Almost Ready";
-  if (score >= 50) return "Needs Practice";
-  return "Not Ready";
 }
 
 module.exports = { calculateResults };
