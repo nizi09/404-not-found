@@ -603,22 +603,46 @@ function renderReview() {
           ${!correct ? `Correct answer: <strong>${cleanOpt(q.options[q.answer])}</strong>` : '✅ Correct!'}
         </div>
         ${!correct ? `<div class="review-item__exp">💡 ${q.explanation}</div>` : ''}
+        <div class="review-item__ai">
+          <button class="btn btn--sm ask-more-btn" onclick="askMoreAboutQuestion(${i}, this)">
+            🤖 Ask AI for more
+          </button>
+          <div class="ask-more-response" id="askMore-${i}" style="display:none"></div>
+        </div>
       </div>`;
   }).join('');
 }
 
-async function fetchAISuggestion(result) {
-  document.getElementById('aiStatus').textContent = 'Analysing your results...';
-  document.getElementById('aiBody').innerHTML = `
-    <div class="ai-loading">
-      <div class="ai-spinner"></div>
-      <p>Your AI co-pilot is reading your weak areas...</p>
-    </div>`;
+async function askMoreAboutQuestion(index, btn) {
+  const q        = currentQuestions[index];
+  const userAns  = userAnswers[index];
+  const letters  = ['A','B','C','D'];
+  const cleanOpt = opt => opt.replace(/^[A-D]\]\s*/,'');
+  const responseDiv = document.getElementById(`askMore-${index}`);
 
-  const prompt = buildAIPrompt(result);
+  btn.disabled = true;
+  btn.textContent = '⏳ Thinking...';
+  responseDiv.style.display = 'block';
+  responseDiv.innerHTML = `<div class="ask-more-loading"><div class="ai-spinner" style="width:24px;height:24px;border-width:2px"></div></div>`;
+
+  const prompt = `You are PassPilot, a friendly UK driving theory instructor.
+
+A learner got this question ${userAns === q.answer ? 'correct' : 'wrong'}:
+
+Question: ${q.text}
+Their answer: ${userAns !== undefined ? cleanOpt(q.options[userAns]) : 'Skipped'}
+Correct answer: ${cleanOpt(q.options[q.answer])}
+Explanation: ${q.explanation}
+
+Give them:
+1. A deeper explanation of WHY the correct answer is right (2-3 sentences)
+2. A real-world example to help them remember it
+3. A memory tip or trick
+
+Keep it friendly, concise and specific to UK driving rules. Max 120 words.`;
 
   try {
-    const apiKey = 'AIzaSyBiy2NIUefPWf_m40BxulslvKcAbeTKkwI';
+    const apiKey = window.GEMINI_KEY || '';
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
       {
@@ -633,18 +657,14 @@ async function fetchAISuggestion(result) {
     const data = await response.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-    if (!text) throw new Error('No text in response');
+    if (!text) throw new Error('No response');
 
-    aiSuggestion = text;
-    document.getElementById('aiStatus').textContent = 'Suggestion ready ✓';
-    document.getElementById('aiBody').innerHTML = `<div class="ai-suggestion-text">${formatAISuggestion(text)}</div>`;
-    document.getElementById('aiActions').classList.remove('hidden');
+    responseDiv.innerHTML = `<div class="ask-more-text">${formatAISuggestion(text)}</div>`;
+    btn.textContent = '✓ Got it';
 
   } catch(err) {
-    aiSuggestion = generateFallbackSuggestion(result);
-    document.getElementById('aiStatus').textContent = 'Suggestion ready ✓';
-    document.getElementById('aiBody').innerHTML = `<div class="ai-suggestion-text">${formatAISuggestion(aiSuggestion)}</div>`;
-    document.getElementById('aiActions').classList.remove('hidden');
+    responseDiv.innerHTML = `<div class="ask-more-text">💡 ${q.explanation} Make sure to review this topic in the official DVSA Highway Code.</div>`;
+    btn.textContent = '✓ Got it';
   }
 }
 
