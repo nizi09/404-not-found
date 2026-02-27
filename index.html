@@ -1,1 +1,508 @@
-dfjnvilbvnglibn
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PassPilot — UK Theory Test & Driving Companion</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ NAV ══ -->
+  <nav class="nav" id="mainNav">
+    <div class="nav__inner">
+      <a class="nav__logo" href="#" onclick="showScreen('landing')">
+        <span class="nav__logo-mark">PP</span>
+        PassPilot
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#" onclick="showScreen('dashboard')">Dashboard</a></li>
+        <li><a href="#" onclick="showScreen('theory')">Theory Test</a></li>
+        <li><a href="#" onclick="showScreen('booking')">Book Your Test</a></li>
+        <li><a href="#" onclick="showScreen('readiness')">Am I Ready?</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="appRoot">
+
+    <!-- ═══════════════════════════════════ LANDING ══ -->
+    <section class="screen active" id="screen-landing">
+      <div class="hero">
+        <div class="hero__badge">🇬🇧 Official DVSA Question Bank</div>
+        <h1 class="hero__title">Pass first time.<br/><em>Every time.</em></h1>
+        <p class="hero__sub">The AI co-pilot that replaces your instructor for theory prep — tracks your weak spots, predicts your readiness, and guides you all the way to test day.</p>
+        <div class="hero__cta">
+          <button class="btn btn--primary btn--lg" onclick="showScreen('theory')">Start Mock Test</button>
+          <button class="btn btn--ghost btn--lg" onclick="showScreen('dashboard')">View My Progress</button>
+        </div>
+        <div class="hero__stats">
+          <div class="stat"><span class="stat__num" id="statTests">0</span><span class="stat__label">Tests Taken</span></div>
+          <div class="stat"><span class="stat__num" id="statAvg">—</span><span class="stat__label">Avg Score</span></div>
+          <div class="stat"><span class="stat__num" id="statStreak">0🔥</span><span class="stat__label">Day Streak</span></div>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-card__icon">🧠</div>
+          <h3>AI-Powered Coaching</h3>
+          <p>After every test, your personal AI co-pilot analyses your answers and creates a laser-focused revision plan. You decide what to act on.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">📊</div>
+          <h3>Readiness Prediction</h3>
+          <p>Our scoring engine tracks your progress across all DVSA topic areas and tells you honestly when you're ready to book your test.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">🗓️</div>
+          <h3>Booking Guide</h3>
+          <p>Step-by-step walkthrough of the real DVSA booking process — what you need, where to go, and what to do if things go wrong.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">🔄</div>
+          <h3>Baseline vs Hybrid</h3>
+          <p>Take tests without AI to measure your true level, then switch to Hybrid mode and see exactly how much the coaching improves your score.</p>
+        </div>
+      </div>
+
+      <div class="topics-preview">
+        <h2>All DVSA Categories Covered</h2>
+        <div class="topics-grid" id="topicsGrid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════ DASHBOARD ══ -->
+    <section class="screen" id="screen-dashboard">
+      <div class="page-header">
+        <h1>Your Dashboard</h1>
+        <p>Track your journey from learner to passer</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dash-card dash-card--score">
+          <h3>Readiness Score</h3>
+          <div class="readiness-ring" id="readinessRing">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" class="ring-bg"/>
+              <circle cx="60" cy="60" r="52" class="ring-fill" id="ringFill" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+            </svg>
+            <span class="ring-label" id="ringLabel">0%</span>
+          </div>
+          <p class="dash-card__sub" id="readinessText">Take your first mock test to get started</p>
+        </div>
+
+        <div class="dash-card">
+          <h3>Recent Tests</h3>
+          <div class="test-history" id="testHistory">
+            <p class="empty-state">No tests yet — <a href="#" onclick="showScreen('theory')">take your first mock</a></p>
+          </div>
+        </div>
+
+        <div class="dash-card dash-card--wide">
+          <h3>Topic Breakdown</h3>
+          <div class="topic-bars" id="topicBars">
+            <p class="empty-state">Complete a test to see your topic breakdown</p>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h3>Revision Plan</h3>
+          <div class="revision-list" id="revisionList">
+            <p class="empty-state">Accept AI suggestions to build your plan</p>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h3>Achievements</h3>
+          <div class="achievements" id="achievements">
+            <div class="badge badge--locked">🎯<span>First Test</span></div>
+            <div class="badge badge--locked">🔥<span>3-Day Streak</span></div>
+            <div class="badge badge--locked">⭐<span>Score 80%+</span></div>
+            <div class="badge badge--locked">🏆<span>Full Pass</span></div>
+            <div class="badge badge--locked">📚<span>All Topics</span></div>
+            <div class="badge badge--locked">🚀<span>Hybrid Pro</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ THEORY TEST ══ -->
+    <section class="screen" id="screen-theory">
+
+      <!-- Mode Selector -->
+      <div id="modeSelect">
+        <div class="page-header">
+          <h1>Mock Theory Test</h1>
+          <p>Choose your mode — Baseline to measure yourself, Hybrid for AI coaching</p>
+        </div>
+        <div class="mode-cards">
+          <div class="mode-card" onclick="startTest('baseline')">
+            <div class="mode-card__icon">📋</div>
+            <h2>Baseline Mode</h2>
+            <p>Take the test without AI help. Your true score, no assistance. Use this to measure where you actually are.</p>
+            <ul>
+              <li>✓ 25 random DVSA questions</li>
+              <li>✓ 57 minute timer</li>
+              <li>✓ Score & review at end</li>
+              <li>✗ No AI suggestions</li>
+            </ul>
+            <button class="btn btn--secondary">Start Baseline</button>
+          </div>
+          <div class="mode-card mode-card--hybrid" onclick="startTest('hybrid')">
+            <div class="mode-card__badge">Recommended</div>
+            <div class="mode-card__icon">🤖</div>
+            <h2>Hybrid Mode</h2>
+            <p>Take the test, then your AI co-pilot analyses your weak areas and builds a personalised revision plan.</p>
+            <ul>
+              <li>✓ 25 random DVSA questions</li>
+              <li>✓ 57 minute timer</li>
+              <li>✓ Full AI analysis after</li>
+              <li>✓ Personalised revision plan</li>
+            </ul>
+            <button class="btn btn--primary">Start Hybrid</button>
+          </div>
+        </div>
+
+        <div class="quick-cats">
+          <h3>Or practise a specific topic:</h3>
+          <div class="cat-pills" id="catPills"><!-- filled by JS --></div>
+        </div>
+      </div>
+
+      <!-- Active Test -->
+      <div id="activeTest" class="hidden">
+        <div class="test-topbar">
+          <button class="btn btn--ghost btn--sm" onclick="abandonTest()">← Exit</button>
+          <div class="test-progress">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span id="progressLabel">1 / 25</span>
+          </div>
+          <div class="test-timer" id="testTimer">57:00</div>
+        </div>
+
+        <div class="question-wrap">
+          <div class="question-meta">
+            <span class="q-category" id="qCategory">Road Signs</span>
+            <span class="q-mode-pill" id="qModePill">Baseline</span>
+          </div>
+          <h2 class="question-text" id="questionText">Loading question...</h2>
+          <div class="question-image hidden" id="questionImageWrap">
+            <img id="questionImage" src="" alt="Question image" />
+          </div>
+          <div class="answers" id="answersGrid"><!-- filled by JS --></div>
+          <div class="question-nav">
+            <button class="btn btn--ghost" id="prevBtn" onclick="prevQuestion()">← Previous</button>
+            <button class="btn btn--primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Screen -->
+      <div id="testResults" class="hidden">
+        <div class="results-hero" id="resultsHero">
+          <div class="results-icon" id="resultsIcon">🎉</div>
+          <h1 id="resultsHeading">Great effort!</h1>
+          <div class="results-score-big" id="resultsBigScore">0%</div>
+          <p id="resultsMsg"></p>
+        </div>
+
+        <div class="results-breakdown">
+          <div class="result-stat"><span id="rCorrect">0</span><small>Correct</small></div>
+          <div class="result-stat"><span id="rWrong">0</span><small>Wrong</small></div>
+          <div class="result-stat"><span id="rTime">—</span><small>Time Taken</small></div>
+          <div class="result-stat"><span id="rPass">—</span><small>Result</small></div>
+        </div>
+
+        <!-- AI Suggestion Card (Hybrid only) -->
+        <div class="ai-card hidden" id="aiCard">
+          <div class="ai-card__header">
+            <span class="ai-card__badge">🤖 AI Co-Pilot</span>
+            <span class="ai-card__status" id="aiStatus">Analysing your results...</span>
+          </div>
+          <div class="ai-card__body" id="aiBody">
+            <div class="ai-loading">
+              <div class="ai-spinner"></div>
+              <p>Your AI co-pilot is reading your weak areas...</p>
+            </div>
+          </div>
+          <div class="ai-card__actions hidden" id="aiActions">
+            <button class="btn btn--primary" onclick="acceptSuggestion()">✓ Accept Plan</button>
+            <button class="btn btn--ghost" onclick="editSuggestion()">✏️ Edit</button>
+            <button class="btn btn--danger" onclick="rejectSuggestion()">✗ Reject</button>
+          </div>
+          <div class="ai-edit-area hidden" id="aiEditArea">
+            <textarea id="aiEditText" rows="6" placeholder="Edit the suggestion..."></textarea>
+            <button class="btn btn--primary btn--sm" onclick="saveEditedSuggestion()">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Weak Areas -->
+        <div class="weak-areas" id="weakAreas">
+          <h3>Your Weak Areas</h3>
+          <div id="weakAreasList"></div>
+        </div>
+
+        <!-- Answer Review -->
+        <details class="review-section">
+          <summary>Review All Answers</summary>
+          <div class="review-list" id="reviewList"></div>
+        </details>
+
+        <div class="results-actions">
+          <button class="btn btn--primary" onclick="startTest(currentMode)">Retake Test</button>
+          <button class="btn btn--secondary" onclick="showScreen('dashboard')">View Dashboard</button>
+          <button class="btn btn--ghost" onclick="showScreen('theory')">Choose New Mode</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════ BOOKING GUIDE ══ -->
+    <section class="screen" id="screen-booking">
+      <div class="page-header">
+        <h1>Book Your Practical Test</h1>
+        <p>Everything you need to book your DVSA practical driving test</p>
+      </div>
+
+      <div class="booking-checker">
+        <h2>Quick Eligibility Check</h2>
+        <div class="checker-grid">
+          <label class="checker-item">
+            <input type="checkbox" id="chkLicence" onchange="updateChecker()"/>
+            <span>I have a valid provisional driving licence</span>
+          </label>
+          <label class="checker-item">
+            <input type="checkbox" id="chkTheory" onchange="updateChecker()"/>
+            <span>I have passed my theory test (and it's within 2 years)</span>
+          </label>
+          <label class="checker-item">
+            <input type="checkbox" id="chkAge" onchange="updateChecker()"/>
+            <span>I am at least 17 years old</span>
+          </label>
+          <label class="checker-item">
+            <input type="checkbox" id="chkLessons" onchange="updateChecker()"/>
+            <span>I feel confident in my driving ability</span>
+          </label>
+        </div>
+        <div class="checker-result" id="checkerResult">
+          <span class="checker-icon">⚠️</span>
+          <p>Complete all checks above before booking</p>
+        </div>
+      </div>
+
+      <div class="booking-steps">
+        <h2>Step-by-Step Booking Process</h2>
+        <div class="step" data-step="1">
+          <div class="step__num">1</div>
+          <div class="step__content">
+            <h3>Gather what you need</h3>
+            <p>Before you go to the booking site, have these ready:</p>
+            <div class="step__list">
+              <div class="step__item">🪪 Your provisional driving licence number</div>
+              <div class="step__item">📄 Your theory test pass certificate number</div>
+              <div class="step__item">💳 A debit or credit card (test costs <strong>£62</strong>)</div>
+              <div class="step__item">📧 Your email address</div>
+            </div>
+          </div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step__num">2</div>
+          <div class="step__content">
+            <h3>Go to the official DVSA booking site</h3>
+            <p>Only use the official GOV.UK website to avoid scams. The URL is:</p>
+            <a class="step__link" href="https://www.gov.uk/book-driving-test" target="_blank" rel="noopener">
+              🔗 www.gov.uk/book-driving-test
+            </a>
+            <p class="step__warning">⚠️ Never use third-party sites — they charge extra fees and are not official.</p>
+          </div>
+        </div>
+        <div class="step" data-step="3">
+          <div class="step__num">3</div>
+          <div class="step__content">
+            <h3>Choose your test centre</h3>
+            <p>Search by postcode to find your nearest DVSA test centre. Things to consider:</p>
+            <div class="step__list">
+              <div class="step__item">📍 Distance — choose somewhere you know the roads around</div>
+              <div class="step__item">⏰ Availability — popular centres book up fast, especially weekends</div>
+              <div class="step__item">🚌 Transport — can you get there on the day without stress?</div>
+            </div>
+          </div>
+        </div>
+        <div class="step" data-step="4">
+          <div class="step__num">4</div>
+          <div class="step__content">
+            <h3>Pick your date and time</h3>
+            <p>The earliest available slot is usually 4–6 weeks away. Tips:</p>
+            <div class="step__list">
+              <div class="step__item">🌅 Morning tests (8–10am) often have quieter roads</div>
+              <div class="step__item">📅 Mid-week slots are easier to get than weekends</div>
+              <div class="step__item">🔔 Set a reminder for 6 weeks out — new slots drop regularly</div>
+            </div>
+          </div>
+        </div>
+        <div class="step" data-step="5">
+          <div class="step__num">5</div>
+          <div class="step__content">
+            <h3>Confirm and pay</h3>
+            <p>Double-check everything before paying. You'll receive a confirmation email with your booking reference. <strong>Keep this safe.</strong></p>
+            <div class="step__list">
+              <div class="step__item">💷 Car test: <strong>£62 weekday / £75 weekend/evening</strong></div>
+              <div class="step__item">📋 You can cancel/reschedule for free if you give <strong>3+ working days notice</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="step" data-step="6">
+          <div class="step__num">6</div>
+          <div class="step__content">
+            <h3>On test day</h3>
+            <div class="step__list">
+              <div class="step__item">🪪 Bring your <strong>photocard driving licence</strong> — no other ID accepted</div>
+              <div class="step__item">🚗 Your car must be insured, taxed, roadworthy & have L-plates</div>
+              <div class="step__item">⏰ Arrive 10–15 minutes early</div>
+              <div class="step__item">📵 Turn your phone off</div>
+              <div class="step__item">🧘 Breathe — the examiner wants you to pass</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-day-info">
+        <h2>What Happens During the Test?</h2>
+        <div class="info-cards">
+          <div class="info-card">
+            <h4>👀 Eyesight Check</h4>
+            <p>Read a number plate from 20 metres. Fail this and the test ends immediately.</p>
+          </div>
+          <div class="info-card">
+            <h4>🔧 Show Me / Tell Me</h4>
+            <p>One question before you drive, one while driving. About vehicle safety checks.</p>
+          </div>
+          <div class="info-card">
+            <h4>🛣️ General Driving</h4>
+            <p>Around 40 minutes of driving through various road types and conditions.</p>
+          </div>
+          <div class="info-card">
+            <h4>🅿️ Manoeuvres</h4>
+            <p>One of: parallel park, bay park (forward or reverse), or pull up on the right.</p>
+          </div>
+          <div class="info-card">
+            <h4>🛣️ Independent Driving</h4>
+            <p>20 minutes following sat-nav directions or road signs without instructions.</p>
+          </div>
+          <div class="info-card">
+            <h4>⚠️ Emergency Stop</h4>
+            <p>1 in 3 tests include this. React quickly when the examiner signals to stop.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pass-fail-info">
+        <div class="pf-card pf-card--pass">
+          <h3>✅ If you PASS</h3>
+          <p>You'll be told immediately. Your examiner marks your pass on a paper certificate. Your full licence arrives by post within 3 weeks. You can drive alone from that moment.</p>
+        </div>
+        <div class="pf-card pf-card--fail">
+          <h3>❌ If you FAIL</h3>
+          <p>You'll receive a debrief listing the faults. You must wait at least 10 working days before retesting. The fee is the same again. Use PassPilot to work on flagged areas before your next attempt.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════ READINESS ══ -->
+    <section class="screen" id="screen-readiness">
+      <div class="page-header">
+        <h1>Am I Ready to Book?</h1>
+        <p>An honest, data-driven assessment of where you stand</p>
+      </div>
+
+      <div class="readiness-score-card" id="readinessCard">
+        <div class="readiness-meter">
+          <div class="meter-bar">
+            <div class="meter-fill" id="meterFill" style="width:0%"></div>
+          </div>
+          <div class="meter-labels">
+            <span>Not ready</span>
+            <span>Almost there</span>
+            <span>Book now</span>
+          </div>
+        </div>
+        <div class="readiness-verdict" id="readinessVerdict">
+          <h2 id="verdictHeading">Take your first test</h2>
+          <p id="verdictText">We need at least one mock test score to assess your readiness. Head to Theory Test and complete a mock — the more you do, the more accurate this becomes.</p>
+        </div>
+      </div>
+
+      <div class="readiness-breakdown" id="readinessBreakdown">
+        <h2>Topic-by-Topic Readiness</h2>
+        <div id="topicReadiness"><!-- filled by JS --></div>
+      </div>
+
+      <div class="tips-section">
+        <h2>Before You Book, Make Sure You Can...</h2>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <span>🚦</span>
+            <p>Score above 86% (43/50) on mock theory tests consistently</p>
+          </div>
+          <div class="tip-card">
+            <span>🛑</span>
+            <p>Identify all major road signs without hesitation</p>
+          </div>
+          <div class="tip-card">
+            <span>⚡</span>
+            <p>React correctly to hazard perception clips (score 44+/75)</p>
+          </div>
+          <div class="tip-card">
+            <span>📏</span>
+            <p>Know all stopping distances at every speed</p>
+          </div>
+          <div class="tip-card">
+            <span>🚗</span>
+            <p>Feel confident in all manoeuvres with your instructor</p>
+          </div>
+          <div class="tip-card">
+            <span>🗺️</span>
+            <p>Comfortable following sat-nav directions independently</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /appRoot -->
+
+  <!-- ═══════════════════════════════════ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="nav__logo-mark">PP</span>
+        <strong>PassPilot</strong>
+        <p>Built for first-time UK drivers. Not affiliated with DVSA or DVLA.</p>
+      </div>
+      <div class="footer__links">
+        <strong>Prepare</strong>
+        <a href="#" onclick="showScreen('theory')">Mock Tests</a>
+        <a href="#" onclick="showScreen('readiness')">Readiness Check</a>
+        <a href="#" onclick="showScreen('dashboard')">Dashboard</a>
+      </div>
+      <div class="footer__links">
+        <strong>Official Links</strong>
+        <a href="https://www.gov.uk/book-theory-test" target="_blank" rel="noopener">Book Theory Test</a>
+        <a href="https://www.gov.uk/book-driving-test" target="_blank" rel="noopener">Book Practical Test</a>
+        <a href="https://www.gov.uk/apply-first-provisional-driving-licence" target="_blank" rel="noopener">Get Provisional Licence</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2025 PassPilot — Team 404-Not-Found · Hackathon Project · Questions based on official DVSA material</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
