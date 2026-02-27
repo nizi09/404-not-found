@@ -1,0 +1,24 @@
+{
+  "name": "404-not-found",
+  "version": "1.0.0",
+  "description": "> AI-powered UK theory test prep & practical test companion. Built at [Hackathon] by Team 404-Not-Found.",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nizi09/404-not-found.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nizi09/404-not-found/issues"
+  },
+  "homepage": "https://github.com/nizi09/404-not-found#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
