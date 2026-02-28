@@ -213,6 +213,34 @@ ul,ol{list-style:none}
   text-transform:uppercase;letter-spacing:.08em;
 }
 
+/* ── Hero CTA button overrides (dark background context) ── */
+.hero__cta .btn--primary {
+  background: var(--coral);
+  color: #fff;
+  border: 2px solid var(--coral);
+  box-shadow: 0 4px 24px rgba(255,95,63,.5);
+  font-size: 1.05rem;
+}
+.hero__cta .btn--primary:hover {
+  background: var(--coral-soft);
+  border-color: var(--coral-soft);
+  box-shadow: 0 8px 36px rgba(255,95,63,.6);
+  transform: translateY(-2px);
+}
+.hero__cta .btn--ghost {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.35);
+  font-size: 1.05rem;
+}
+.hero__cta .btn--ghost:hover {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.75);
+  color: #ffffff;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
 /* Features */
 .features{
   max-width:1280px;margin:0 auto;padding:5rem 1.5rem;
