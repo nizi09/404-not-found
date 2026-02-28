@@ -23,6 +23,7 @@
         <li><a href="#" onclick="showScreen('drive')">🎥 Drive Analyser</a></li>
         <li><a href="#" onclick="showScreen('booking')">Book Your Test</a></li>
         <li><a href="#" onclick="showScreen('readiness')">Am I Ready?</a></li>
+        <li><a href="#" onclick="showScreen('revision')">Revision Hub</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" onclick="toggleNav()">
         <span></span><span></span><span></span>
@@ -102,6 +103,10 @@
           <div class="test-history" id="testHistory">
             <p class="empty-state">No tests yet — <a href="#" onclick="showScreen('theory')">take your first mock</a></p>
           </div>
+        </div>
+        <div class="dash-card dash-card--wide">
+          <h3>Score History</h3>
+          <canvas id="scoreChart" style="width:100%;display:block;"></canvas>
         </div>
         <div class="dash-card dash-card--wide">
           <h3>Topic Breakdown</h3>
@@ -552,6 +557,11 @@
           <div class="tip-card"><span>🗺️</span><p>Comfortable following sat-nav directions independently</p></div>
         </div>
       </div>
+    </section>
+
+    <!-- ═══════════════════════════════ REVISION HUB ══ -->
+    <section class="screen" id="screen-revision">
+      <!-- populated by initRevisionHub() in app.js -->
     </section>
 
   </main>

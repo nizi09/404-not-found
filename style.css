@@ -1201,3 +1201,20 @@ ul,ol{list-style:none}
   .analyser-grid { grid-template-columns: 1fr; }
   .drive-stats-row { grid-template-columns: repeat(2, 1fr); }
 }
+/* ── Score chart card ── */
+#scoreChart {
+  width: 100%;
+  min-height: 180px;
+  display: block;
+}
+
+/* ── Revision hub topic buttons (active state applied via JS) ── */
+.rev-topic-btn:hover {
+  background: var(--paper-warm) !important;
+  border-color: var(--coral) !important;
+  color: var(--coral) !important;
+}
+
+/* ── AI suggestion text ── */
+.ai-suggestion-text p { margin: 0; line-height: 1.7; font-size: .93rem; color: var(--ink-mid); }
+.ask-more-text { font-size: .85rem; color: var(--grey-500); line-height: 1.7; padding: .5rem 0; }
